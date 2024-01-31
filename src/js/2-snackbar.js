@@ -46,6 +46,7 @@ form.reset();
 function showCustomToast(title, message, className, backgroundColor, iconUrl) {
     
     iziToast.show({
+        messageSize: '380px',
         title: title,
         message: message,
         class: className,
