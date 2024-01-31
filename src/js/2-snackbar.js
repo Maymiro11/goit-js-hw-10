@@ -9,7 +9,7 @@ const form = document.querySelector('.form');
 
 const toastMessage = document.querySelector('.iziToast-message');
 if (toastMessage) {
-    toastMessage.style.width = '380px';
+    toastMessage.style.width = 'auto';
 }
 
 form.addEventListener('submit', function(e) {
