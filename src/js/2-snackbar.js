@@ -123,4 +123,37 @@ promise.then(
         });
     }
 );
+
+delayInput.value = '';
 });
+
+function showCustomToast(title, message, className, backgroundColor, iconUrl) {
+    iziToast.show({
+        title: title,
+        message: message,
+        class: className,
+        position: 'topCenter',
+        titleColor: '#ffffff',
+        titleSize: '16px',
+        titleLineHeight: '1.5',
+        messageColor: '#ffffff',
+        messageSize: '18px',
+        messageLineHeight: '1.5',
+        backgroundColor: backgroundColor,
+        iconColor: '#ffffff',
+        iconUrl: iconUrl,
+        imageWidth: 50,
+        timeout: 10000,
+        close: false,
+        buttons: [
+            [
+                `<button type="button" style="background-color: ${backgroundColor}"><img src=${iconUrl}></button>`,
+                function (instance, toast) {
+                    instance.hide({ transitionOut: 'fadeOut' }, toast);
+                },
+            ],
+        ],
+        closeOnEscape: true,
+        pauseOnHover: false,
+    });
+}
