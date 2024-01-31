@@ -7,6 +7,11 @@ import warningIcon from '../img/izitoast-warning.svg';
 
 const form = document.querySelector('.form');
 
+const toastMessage = document.querySelector('.iziToast-message');
+if (toastMessage) {
+    toastMessage.style.width = '380px';
+}
+
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -36,7 +41,7 @@ promise.then(
     },
 
     (delay) => {
-        showCustomToast('Error',`Rejected promise in ${delay}ms`, 'error-message', '#ef4040', errorIcon);
+        showCustomToast('Error',`Rejected promise in ${delay}ms`, 'warning-message', '#ef4040', errorIcon);
     }
 );
 
