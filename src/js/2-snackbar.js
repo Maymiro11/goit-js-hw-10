@@ -3,6 +3,7 @@ import "izitoast/dist/css/iziToast.min.css";
 import errorIcon from '../img/izitoast-icon.svg';
 import closeIcon from '../img/izitoast-close.svg';
 import okIcon from '../img/izitoast-ok.svg';
+import warningIcon from '../img/izitoast-warning.svg';
 
 const form = document.querySelector('.form');
 
@@ -16,9 +17,9 @@ form.addEventListener('submit', function(e) {
     if (!delayInput || !selectedState) {
         
         iziToast.show({
-            title: 'Error',
+            title: 'Warning',
             message: 'Please fill the fields',
-            class: 'error-message',
+            class: 'warning-message',
             position: 'topCenter',
             titleColor: '#ffffff',
             titleSize: '16px',
@@ -26,15 +27,15 @@ form.addEventListener('submit', function(e) {
             messageColor: '#ffffff',
             messageSize: '16px',
             messageLineHeight: '1.5',
-            backgroundColor: '#ef4040',
+            backgroundColor: '#FFA000',
             iconColor: '#ffffff',
-            iconUrl: errorIcon ,
+            iconUrl: warningIcon ,
             imageWidth: 50,
             timeout: 10000,
             close: false,
             buttons: [
                 [
-                `<button type="button" style="background-color: #EF4040"><img src=${closeIcon}></button>`,
+                `<button type="button" style="background-color: #FFA000"><img src=${closeIcon}></button>`,
                 function (instance, toast) {
                     instance.hide({ transitionOut: 'fadeOut' }, toast);
                 },
