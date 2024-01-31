@@ -112,7 +112,7 @@ promise.then(
             close: false,
             buttons: [
                 [
-                `<button type="button" style="background-color: #EF4040"><img src=${closeIcon}></button>`,
+                `<button type="button" style="background-color: #EF4040; display: inline-block; white-space: nowrap;"><img src=${closeIcon}></button>`,
                 function (instance, toast) {
                     instance.hide({ transitionOut: 'fadeOut' }, toast);
                 },
