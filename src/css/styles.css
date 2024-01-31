@@ -351,3 +351,6 @@ button[type='submit']:focus {
   box-shadow: 0 0 5px 1px rgba(112, 128, 144, 0.3);
 }
 
+.iziToast-message{
+  width: 380px !important;
+}
