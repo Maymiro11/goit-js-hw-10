@@ -63,7 +63,7 @@ promise.then(
         
         iziToast.show({
             title: 'OK',
-            message: `✅ Fulfilled promise in ${delay}ms`,
+            message: `Fulfilled promise in ${delay}ms`,
             class: 'success-message',
             position: 'topCenter',
             titleColor: '#ffffff',
@@ -74,13 +74,13 @@ promise.then(
             messageLineHeight: '1.5',
             backgroundColor: '#59A10D',
             iconColor: '#ffffff',
-            iconUrl: '' ,
+            iconUrl: okIcon ,
             imageWidth: 50,
             timeout: 10000,
             close: false,
             buttons: [
                 [
-                `<button type="button" style="background-color: #59A10D"><img src=${okIcon}></button>`,
+                `<button type="button" style="background-color: #59A10D"><img src=${closeIcon}></button>`,
                 function (instance, toast) {
                     instance.hide({ transitionOut: 'fadeOut' }, toast);
                 },
@@ -95,7 +95,7 @@ promise.then(
 
         iziToast.show({
             title: 'Error',
-            message: `❌ Rejected promise in ${delay}ms`,
+            message: `Rejected promise in ${delay}ms`,
             class: 'error-message',
             position: 'topCenter',
             titleColor: '#ffffff',
@@ -124,7 +124,7 @@ promise.then(
     }
 );
 
-delayInput.value = '';
+form.reset();
 });
 
 function showCustomToast(title, message, className, backgroundColor, iconUrl) {
@@ -137,7 +137,7 @@ function showCustomToast(title, message, className, backgroundColor, iconUrl) {
         titleSize: '16px',
         titleLineHeight: '1.5',
         messageColor: '#ffffff',
-        messageSize: '18px',
+        messageSize: '16px',
         messageLineHeight: '1.5',
         backgroundColor: backgroundColor,
         iconColor: '#ffffff',
