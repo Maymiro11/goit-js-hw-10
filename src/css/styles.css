@@ -196,16 +196,6 @@ body {
   border-radius: 8px !important;
   background: #f5f5f5 !important;
 }
-.form input {
-  display: flex;
-  width: 360px;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 4px;
-  border: 1px solid #808080;
-}
 .start:disabled {
   
   padding: 8px 16px;
@@ -230,7 +220,7 @@ body {
   align-items: center;
   gap: 10px;
   border-radius: 8px;
-  background: #4e75ff;
+  background: #05869a;
   color: #fff;
   font-family: Montserrat;
   font-size: 16px;
@@ -257,6 +247,106 @@ body {
 }
 .back-button:hover,
 .back-button:focus {
+  background-color: #0c4862;
+  box-shadow: 0 0 5px 1px rgba(112, 128, 144, 0.3);
+}
+/* ----------Snackbar---------------- */
+
+form.form {
+  width: 360px;
+  /* margin: 0 auto; */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+form.form > label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+form.form input[name='delay'] {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #808080;
+  color: #2e2f42;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+form.form input[name='delay']:hover {
+  border: 1px solid #000;
+}
+
+form.form input[name='delay']:focus-within {
+  border: 1px solid #05869a;
+  outline: none;
+}
+
+form.form fieldset {
+  padding: 12px 0 12px;
+  border-radius: 4px;
+  border: 1px solid #808080;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  color: #2e2f42;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+form.form fieldset:hover {
+  border: 1px solid #000;
+}
+
+form.form legend {
+  margin-left: 28px;
+  padding: 3px;
+  color: #2e2f42;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+form.form input[type='radio'] {
+  accent-color: #05869a;
+  scale: 1.5;
+  margin-right: 8px;
+  color: #2e2f42;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+form.form input[type='radio']:hover {
+  accent-color: #05869a;
+  scale: 1.5;
+}
+button[type='submit'] {
+  width: 100%;
+  margin-left: 0;
+  color: aliceblue;
+  background-color: #05869a;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  transition: box-shadow 250ms cubic-bezier(0.47, 0, 0.745, 0.715),
+    background-color 250ms cubic-bezier(0.47, 0, 0.745, 0.715);
+  font-family: 'Montserrat';
+}
+button[type='submit']:hover,
+button[type='submit']:focus {
   background-color: #0c4862;
   box-shadow: 0 0 5px 1px rgba(112, 128, 144, 0.3);
 }
