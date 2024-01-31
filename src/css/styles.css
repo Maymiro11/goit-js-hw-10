@@ -352,5 +352,5 @@ button[type='submit']:focus {
 }
 
 .iziToast-message{
-  width: 380px !important;
+  width: auto !important;
 }
