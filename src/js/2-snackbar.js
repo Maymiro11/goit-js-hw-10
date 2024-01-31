@@ -74,4 +74,10 @@ function showCustomToast(title, message, className, backgroundColor, iconUrl) {
         closeOnEscape: true,
         pauseOnHover: false,
     });
+
+    const toastMessage = document.querySelector('.iziToast-message');
+    if (toastMessage) {
+        toastMessage.style.width = '380px';
+    }
+
 }
