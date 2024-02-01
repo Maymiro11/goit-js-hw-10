@@ -76,18 +76,37 @@ document.addEventListener('DOMContentLoaded', function() {
         hoursElement.textContent = formatTime(hours);
         minutesElement.textContent = formatTime(minutes);
         secondsElement.textContent = formatTime(seconds);
+
+        if (isNaN(minutes)) {
+            minutesElement.textContent = '00';
+        } else {
+            minutesElement.textContent = formatTime(minutes);
+        }
+    
+        if (isNaN(seconds)) {
+            secondsElement.textContent = '00';
+        } else {
+            secondsElement.textContent = formatTime(seconds);
+        }
     }
 
     function startCountdown() {
+        startButton.disabled = true;
         const selectedDate = new Date(datePicker.value);
         const now = new Date();
 
         const timeRemaining = selectedDate - now;
         updateTimerDisplay(timeRemaining);
-        setInterval(() => {
-            const currentTimeRemaining = selectedDate - new Date();
+
+        const timerInterval = setInterval(() => {
+        const currentTimeRemaining = selectedDate - new Date();
+        if (currentTimeRemaining <= 0) {
+            clearInterval(timerInterval);
+            updateTimerDisplay(0);
+        } else {
             updateTimerDisplay(currentTimeRemaining);
-        }, 1000);
+        }
+    }, 1000);
     }
 
     function formatTime(time) {

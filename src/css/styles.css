@@ -65,6 +65,7 @@ body {
   pointer-events: none;
 }
 #datetime-picker {
+  background-color: #cfcfcf;
   color: #2e2f42;
   font-family: 'Montserrat';
   font-size: 16px;
@@ -122,7 +123,7 @@ body {
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.2; /* 120% */
+  line-height: 1.2; 
   letter-spacing: 0.04em;
 }
 .label {
@@ -131,27 +132,10 @@ body {
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5; /* 150% */
+  line-height: 1.5; 
   letter-spacing: 0.04em;
 }
-.error-message {
-  display: inline-flex;
-  padding: 20px;
-  align-items: center;
-  gap: 8px;
-  border-radius: 4px;
-  border-bottom: 2px solid #ffbebe;
-  background: #ef4040;
-  width: 302px;
-  height: 64px;
-  flex-shrink: 0;
-}
 
-
-#datetime-picker:focus-within {
-  border-radius: 4px;
-  border: 1px solid #4e75ff;
-}
 
 #datetime-picker:hover {
   border-radius: 4px;
@@ -204,7 +188,8 @@ body {
   gap: 10px;
   border-radius: 8px;
   background: #cfcfcf;
-  color: #989898;
+  color: #6d6d6d;
+  border: 1px solid #555555;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
@@ -222,11 +207,12 @@ body {
   border-radius: 8px;
   background: #05869a;
   color: #fff;
+  border: 1px solid #555555;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5; /* 150% */
+  line-height: 1.5; 
   letter-spacing: 0.04em;
   border: none;
 }
@@ -237,6 +223,7 @@ body {
   min-width: 150px;
   color: aliceblue;
   background-color: #05869a;
+  border: 1px solid #000;
   padding: 8px 16px;
   border-radius: 8px;
   transition: box-shadow 250ms cubic-bezier(0.47, 0, 0.745, 0.715),
@@ -244,6 +231,7 @@ body {
   font-family: 'Montserrat';
   margin-top: 20px;
   margin-left: 20px;
+
 }
 .back-button:hover,
 .back-button:focus {
@@ -279,6 +267,7 @@ form.form input[name='delay'] {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.04em;
+  background-color: #cfcfcf;
 }
 
 form.form input[name='delay']:hover {
@@ -327,6 +316,7 @@ form.form input[type='radio'] {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.04em;
+  background-color: #787777;
 }
 
 form.form input[type='radio']:hover {
@@ -353,4 +343,11 @@ button[type='submit']:focus {
 
 .iziToast-message{
   width: auto !important;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #7e7e8b, #edf1f2);
 }
