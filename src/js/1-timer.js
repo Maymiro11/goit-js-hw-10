@@ -5,110 +5,150 @@ import 'izitoast/dist/css/iziToast.min.css';
 import errorIcon from '../img/izitoast-icon.svg';
 import closeIcon from '../img/izitoast-close.svg';
 
-document.addEventListener('DOMContentLoaded', function() {
-    const startButton = document.querySelector('[data-start]');
-    const daysElement = document.querySelector('[data-days]');
-    const hoursElement = document.querySelector('[data-hours]');
-    const minutesElement = document.querySelector('[data-minutes]');
-    const secondsElement = document.querySelector('[data-seconds]');
-    const datePicker = document.getElementById('datetime-picker');
-
-    let userSelectedDate;
-
-    flatpickr('#datetime-picker', {
-        enableTime: true,
-        time_24hr: true,
-        defaultDate: new Date(),
-        minuteIncrement: 1,
-        onClose(selectedDates) {
-            const selectedDate = selectedDates[0];
-
-            if (selectedDate < new Date()) {
-                startButton.disabled = true;
-                iziToast.show({
-                    title: 'Error',
-                    message: 'Please choose a date in the future',
-                    class: 'error-message',
-                    position: 'topCenter',
-                    titleColor: '#ffffff',
-                    titleSize: '16px',
-                    titleLineHeight: '1.5',
-                    messageColor: '#ffffff',
-                    messageSize: '16px',
-                    messageLineHeight: '1.5',
-                    backgroundColor: '#ef4040',
-                    icon: '',
-                    iconText: '',
-                    iconColor: '#ffffff',
-                    iconUrl: errorIcon ,
-                    image: '',
-                    imageWidth: 50,
-                    timeout: 10000,
-                    close: false,
-                    buttons: [
-                        [
-                        `<button type="button" style="background-color: #EF4040"><img src=${closeIcon}></button>`,
-                        function (instance, toast) {
-                            instance.hide({ transitionOut: 'fadeOut' }, toast);
-                        },
-                        ],
-                    ],
-                    closeOnEscape: true,
-                    pauseOnHover: false,
-                });
-
-            } else {
-                startButton.disabled = false;
-                userSelectedDate = selectedDate;
-            }
-        },
-    });
-
-    function updateTimerDisplay(timeRemaining) {
-        const { days, hours, minutes, seconds } = convertMs(timeRemaining);
-        daysElement.textContent = formatTime(days);
-        hoursElement.textContent = formatTime(hours);
-        minutesElement.textContent = formatTime(minutes);
-        secondsElement.textContent = formatTime(seconds);
+const userLinks = {
+    startButton: document.querySelector('[data-start]'),
+    input: document.querySelector('#datetime-picker'),
+    daysElement: document.querySelector('[data-days]'),
+    hoursElement: document.querySelector('[data-hours]'),
+    minutesElement: document.querySelector('[data-minutes]'),
+    secondsElement: document.querySelector('[data-seconds]'),
+  };
+  
+  class UserTimer {
+    static #second = 1000;
+    static #minute = UserTimer.#second * 60;
+    static #hour = UserTimer.#minute * 60;
+    static #day = UserTimer.#hour * 24;
+    #intervalID = null;
+  
+    constructor(ms, paramsObject) {
+      this.hoursElement = paramsObject.hoursElement;
+      this.minutesElement = paramsObject.minutesElement;
+      this.secondsElement = paramsObject.secondsElement;
+      this.startButton = paramsObject.startButton;
+      this.input = paramsObject.input;
+      this.daysElement = paramsObject.daysElement;
+      this.days = ms.getDate() || 0;
+      this.hours = ms.getHours() || 0;
+      this.minutes = ms.getMinutes() || 0;
+      this.seconds = ms.getSeconds() || 0;
     }
-
-    function startCountdown() {
-        startButton.disabled = true;
-        const selectedDate = new Date(datePicker.value);
-        const now = new Date();
-
-        const timeRemaining = selectedDate - now;
-        updateTimerDisplay(timeRemaining);
-
-        const timerInterval = setInterval(() => {
-            const currentTimeRemaining = selectedDate - new Date();
-            if (currentTimeRemaining <= 0) {
-                clearInterval(timerInterval);
-                updateTimerDisplay(0);
-                startButton.disabled = false;
-            } else {
-                updateTimerDisplay(currentTimeRemaining);
-            }
+  
+    #convertMs(ms) {
+      const days = Math.floor(ms / UserTimer.#day);
+      const hours = Math.floor((ms % UserTimer.#day) / UserTimer.#hour);
+      const minutes = Math.floor(
+        ((ms % UserTimer.#day) % UserTimer.#hour) / UserTimer.#minute
+      );
+      const seconds = Math.floor(
+        (((ms % UserTimer.#day) % UserTimer.#hour) % UserTimer.#minute) /
+          UserTimer.#second
+      );
+      return { days, hours, minutes, seconds };
+    }
+  
+    static isValidDate(date) {
+      return date - Date.now() > 0 ? true : false;
+    }
+  
+    static addLeadingZero(value) {
+      return value.padStart(2, '0');
+    }
+  
+    startTimer(date) {
+      if (UserTimer.isValidDate(date)) {
+        this.startButton.classList.remove('js-enabled');
+        this.input.classList.add('js-disabled');
+        this.input.disabled = true;
+        this.#intervalID = setInterval(() => {
+          const timeDiff = date - Date.now();
+          const timeRemaining = this.#convertMs(timeDiff);
+          console.log('tick');
+          this.daysElement.textContent = UserTimer.addLeadingZero(
+            String(timeRemaining.days)
+          );
+          this.hoursElement.textContent = UserTimer.addLeadingZero(
+            String(timeRemaining.hours)
+          );
+          this.minutesElement.textContent = UserTimer.addLeadingZero(
+            String(timeRemaining.minutes)
+          );
+          this.secondsElement.textContent = UserTimer.addLeadingZero(
+            String(timeRemaining.seconds)
+          );
+          if (!UserTimer.isValidDate(date)) {
+            this.input.disabled = false;
+            document
+              .querySelector('#datetime-picker')
+              .classList.remove('js-disabled');
+            this.#stopTimer();
+          }
         }, 1000);
+      }
     }
-
-    function formatTime(time) {
-        return time < 10 ? `0${time}` : time;
+  
+    #stopTimer() {
+      clearInterval(this.#intervalID);
+      this.daysElement.textContent = '00';
+      this.hoursElement.textContent = '00';
+      this.minutesElement.textContent = '00';
+      this.secondsElement.textContent = '00';
     }
-
-    function convertMs(ms) {
-        const second = 1000;
-        const minute = second * 60;
-        const hour = minute * 60;
-        const day = hour * 24;
-
-        const days = Math.floor(ms / day);
-        const hours = Math.floor((ms % day) / hour);
-        const minutes = Math.floor((ms % hour) / minute);
-        const seconds = Math.floor((ms % minute) / second);
-
-        return { days, hours, minutes, seconds };
+  }
+  
+  flatpickr('#datetime-picker', {
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose: onClose,
+  });
+  
+  function onClose(selectedDates) {
+    console.log(selectedDates[0]);
+    const closeTimestamp = Date.now();
+    const timer = new UserTimer(selectedDates[0], userLinks);
+    if (!UserTimer.isValidDate(selectedDates[0])) {
+      showMessage('Please choose a date in the future');
+      return;
     }
-
-    startButton.addEventListener('click', startCountdown);
-});
+    const timeoutID = setTimeout(() => {
+      timer.startButton.classList.remove('js-enabled');
+      timer.startButton.disabled = true;
+      showMessage('Selected date is not valid anymore');
+    }, selectedDates[0] - closeTimestamp);
+  
+    if (UserTimer.isValidDate(selectedDates[0])) {
+      timer.startButton.classList.add('js-enabled');
+      timer.startButton.disabled = false;
+      timer.startButton.addEventListener('click', () => {
+        clearTimeout(timeoutID);
+        timer.startTimer(selectedDates[0]);
+      });
+    }
+  }
+  
+  function showMessage(messageText) {
+    izitoast.show({
+      class: 'js-izitoast-message',
+      message: messageText,
+      messageColor: '#FFFFFF',
+      messageSize: '16px',
+      position: 'topCenter',
+      backgroundColor: '#EF4040',
+      progressBarColor: '#B51B1B',
+      iconUrl: errorIcon,
+      displayMode: 'replace',
+      close: false,
+      closeOnEscape: true,
+      pauseOnHover: false,
+      buttons: [
+        [
+          `<button type="button" style="background-color: transparent;"><img src=${closeIcon}></button>`,
+          function (instance, toast) {
+            instance.hide({ transitionOut: 'fadeOut' }, toast);
+          },
+        ],
+      ],
+    });
+  }

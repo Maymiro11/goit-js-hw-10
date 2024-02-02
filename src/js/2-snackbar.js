@@ -1,16 +1,13 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
+
+//іконки імпортовані з макету технічного завдання
 import errorIcon from '../img/izitoast-icon.svg';
 import closeIcon from '../img/izitoast-close.svg';
 import okIcon from '../img/izitoast-ok.svg';
-import warningIcon from '../img/izitoast-warning.svg';
+
 
 const form = document.querySelector('.form');
-
-const toastMessage = document.querySelector('.iziToast-message');
-if (toastMessage) {
-    toastMessage.style.width = 'auto';
-}
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
