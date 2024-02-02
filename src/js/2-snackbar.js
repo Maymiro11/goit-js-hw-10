@@ -32,7 +32,10 @@ form.addEventListener('submit', function(e) {
                     resolve(delay);
                 }, delay);
             } else {
-                reject(delay);
+                setTimeout(() => {
+                    reject(delay);
+                }, delay);
+                
 }});
 
 promise.then(

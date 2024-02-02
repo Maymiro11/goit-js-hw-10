@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const secondsElement = document.querySelector('[data-seconds]');
     const datePicker = document.getElementById('datetime-picker');
 
-    startButton.addEventListener('click', startCountdown);
-
     let userSelectedDate;
 
     flatpickr('#datetime-picker', {
@@ -67,27 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function updateTimerDisplay(timeRemaining) {
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
+        const { days, hours, minutes, seconds } = convertMs(timeRemaining);
         daysElement.textContent = formatTime(days);
         hoursElement.textContent = formatTime(hours);
         minutesElement.textContent = formatTime(minutes);
         secondsElement.textContent = formatTime(seconds);
-
-        if (isNaN(minutes)) {
-            minutesElement.textContent = '00';
-        } else {
-            minutesElement.textContent = formatTime(minutes);
-        }
-    
-        if (isNaN(seconds)) {
-            secondsElement.textContent = '00';
-        } else {
-            secondsElement.textContent = formatTime(seconds);
-        }
     }
 
     function startCountdown() {
@@ -99,18 +81,34 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTimerDisplay(timeRemaining);
 
         const timerInterval = setInterval(() => {
-        const currentTimeRemaining = selectedDate - new Date();
-        if (currentTimeRemaining <= 0) {
-            clearInterval(timerInterval);
-            updateTimerDisplay(0);
-        } else {
-            updateTimerDisplay(currentTimeRemaining);
-        }
-    }, 1000);
+            const currentTimeRemaining = selectedDate - new Date();
+            if (currentTimeRemaining <= 0) {
+                clearInterval(timerInterval);
+                updateTimerDisplay(0);
+                startButton.disabled = false;
+            } else {
+                updateTimerDisplay(currentTimeRemaining);
+            }
+        }, 1000);
     }
 
     function formatTime(time) {
         return time < 10 ? `0${time}` : time;
     }
-});
 
+    function convertMs(ms) {
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const days = Math.floor(ms / day);
+        const hours = Math.floor((ms % day) / hour);
+        const minutes = Math.floor((ms % hour) / minute);
+        const seconds = Math.floor((ms % minute) / second);
+
+        return { days, hours, minutes, seconds };
+    }
+
+    startButton.addEventListener('click', startCountdown);
+});
