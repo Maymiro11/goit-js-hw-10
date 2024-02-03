@@ -22,26 +22,23 @@ form.addEventListener('submit', function(e) {
     }
 
     const delay = parseInt(delayInput);
-
-        const promise = new Promise((resolve, reject) => {
-            if (selectedState.value === 'fulfilled') {
-                setTimeout(() => {
-                    resolve(delay);
-                }, delay);
-            } else {
-                setTimeout(() => {
-                    reject(delay);
-                }, delay);
-                
-}});
+const promise = new Promise((resolve, reject) => {
+    let timeoutId = setTimeout(() => {
+        if (selectedState.value === 'fulfilled') {
+            resolve(delay);
+        } else {
+            reject(delay);
+        }
+    }, delay);
+});
 
 promise.then(
     (delay) => {
-        showCustomToast('OK',`Fulfilled promise in ${delay}ms`, 'success-message', '#59A10D', okIcon);
-    },
-
+        showCustomToast('OK', `Fulfilled promise in ${delay}ms`, 'success-message', '#59A10D', okIcon);
+    }
+).catch(
     (delay) => {
-        showCustomToast('Error',`Rejected promise in ${delay}ms`, 'warning-message', '#ef4040', errorIcon);
+        showCustomToast('Error', `Rejected promise in ${delay}ms`, 'warning-message', '#ef4040', errorIcon);
     }
 );
 
